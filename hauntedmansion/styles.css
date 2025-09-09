@@ -1,0 +1,13 @@
+.container {
+  align-items: center; 
+  text-align: center
+}
+.image{
+    float: left;
+  padding: 5px;
+  margin-left: 7%;
+}
+.p-container{
+  display: flex;
+  gap: .5rem;
+}
