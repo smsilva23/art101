@@ -193,7 +193,7 @@ document.getElementById('trash-icon').addEventListener('dblclick', function() {
 });
 
 document.getElementById('worry-icon').addEventListener('dblclick', function() {
-    openWorryTracker();
+    openMindPalace();
 });
 
 document.getElementById('thoughts-icon').addEventListener('dblclick', function() {
@@ -258,7 +258,13 @@ function openWorryTracker() {
     createCustomPopup("Worry Tracker v1.0", message, ["Export Data", "Clear All", "Close"], true);
 }
 
-// Thought Journal App - Interactive worry logging
+// Mind Palace App - Opens the worry jar page
+function openMindPalace() {
+    // Navigate to the Mind Palace page
+    window.location.href = 'mind_palace.html';
+}
+
+// Thought Journal App - Interactive worry logging (kept for reference)
 function openThoughtJournal() {
     const journalEntries = [
         "3:47 PM - What if I'm not prepared for tomorrow's meeting?",

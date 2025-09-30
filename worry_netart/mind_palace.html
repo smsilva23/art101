@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mind Palace - Worry Visualization</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="mind_palace.css">
+</head>
+<body>
+    <div class="mind-palace-container">
+        <!-- Menu Bar -->
+        <div class="menu-bar">
+            <div class="menu-item">🍎</div>
+            <div class="menu-item">File</div>
+            <div class="menu-item">Edit</div>
+            <div class="menu-item">View</div>
+            <div class="menu-item">Special</div>
+            <div class="menu-item">Mind Palace</div>
+            <div class="menu-item">Help</div>
+            <div class="menu-item clock" id="clock">12:00 PM</div>
+        </div>
+        
+        <!-- Navigation Controls -->
+        <div class="mind-palace-controls">
+            <button id="back-to-desktop" class="popup-button">← Back to Desktop</button>
+            <button id="reset-mind" class="popup-button">Reset Mind</button>
+        </div>
+
+        <!-- Worry Jar Container -->
+        <div class="worry-jar-container">
+            <div class="jar-wrapper">
+                <div id="worry-jar" class="worry-jar">
+                    <div class="jar-top"></div>
+                    <div class="jar-body">
+                        <div class="jar-content" id="jar-content">
+                            <!-- Worry beads will be added here -->
+                        </div>
+                    </div>
+                    <div class="jar-bottom"></div>
+                </div>
+                
+                <!-- Jar Actions -->
+                <div class="jar-actions">
+                    <button id="shake-jar" class="jar-button">Shake Jar</button>
+                    <button id="empty-jar" class="jar-button">Empty Jar</button>
+                    <button id="pour-worries" class="jar-button">Pour Out</button>
+                </div>
+            </div>
+            
+            <!-- Worry Categories -->
+            <div class="category-legend">
+                <div class="legend-item" data-category="work">
+                    <div class="legend-color work"></div>
+                    <span>Work</span>
+                </div>
+                <div class="legend-item" data-category="school">
+                    <div class="legend-color school"></div>
+                    <span>School</span>
+                </div>
+                <div class="legend-item" data-category="relationships">
+                    <div class="legend-color relationships"></div>
+                    <span>Relationships</span>
+                </div>
+                <div class="legend-item" data-category="health">
+                    <div class="legend-color health"></div>
+                    <span>Health</span>
+                </div>
+                <div class="legend-item" data-category="future">
+                    <div class="legend-color future"></div>
+                    <span>Future</span>
+                </div>
+                <div class="legend-item" data-category="general">
+                    <div class="legend-color general"></div>
+                    <span>General</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls Panel -->
+        <div class="controls-panel">
+            <div class="control-section">
+                <h3>Add New Worry</h3>
+                <textarea id="new-worry-input" placeholder="What's worrying you?"></textarea>
+                <select id="worry-category">
+                    <option value="general">General</option>
+                    <option value="work">Work</option>
+                    <option value="school">School</option>
+                    <option value="relationships">Relationships</option>
+                    <option value="health">Health</option>
+                    <option value="future">Future</option>
+                </select>
+                <button id="add-worry-btn">Add to Mind</button>
+            </div>
+
+            <div class="control-section">
+                <h3>Mind State</h3>
+                <div class="mind-stats">
+                    <div class="stat">
+                        <span class="stat-label">Total Worries:</span>
+                        <span id="total-worries">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Active Connections:</span>
+                        <span id="active-connections">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Mind Clarity:</span>
+                        <span id="mind-clarity">100%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <h3>Export</h3>
+                <div class="viz-controls">
+                    <button id="export-mind">Export Worries</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Worry Details Modal -->
+        <div id="worry-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 id="modal-worry-text"></h2>
+                <div class="modal-details">
+                    <p><strong>Category:</strong> <span id="modal-category"></span></p>
+                    <p><strong>Intensity:</strong> <span id="modal-intensity"></span></p>
+                    <p><strong>Connections:</strong> <span id="modal-connections"></span></p>
+                    <p><strong>Added:</strong> <span id="modal-date"></span></p>
+                </div>
+                <div class="modal-actions">
+                    <button id="edit-worry">Edit</button>
+                    <button id="delete-worry">Delete</button>
+                    <button id="find-similar">Find Similar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="mind_palace.js"></script>
+</body>
+</html>
