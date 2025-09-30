@@ -1,0 +1,290 @@
+/* macOS 9 Clunky Theme */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Chicago', 'Monaco', 'Courier New', monospace;
+    /* no background on body */
+}
+
+.desktop {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+
+    background-image: url('barbie.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+/* Menu Bar */
+.menu-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 24px;
+    background: linear-gradient(to bottom, #e0e0e0 0%, #c0c0c0 100%);
+    border-bottom: 1px solid #808080;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    z-index: 1000;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.menu-item {
+    margin-right: 16px;
+    padding: 2px 6px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.1s;
+}
+
+.menu-item:hover {
+    background: #a0a0a0;
+}
+
+.clock {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+/* Desktop Icons */
+.desktop-icon {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.desktop-icon:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.desktop-icon:active {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.icon-image {
+    font-size: 32px;
+    margin-bottom: 4px;
+}
+
+.icon-label {
+    font-size: 10px;
+    text-align: center;
+    color: white;
+    text-shadow: 1px 1px 0px #000;
+    word-wrap: break-word;
+    max-width: 70px;
+}
+
+#trash-icon {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+}
+
+#worry-icon {
+    position: absolute;
+    top: 50px;
+    left: 250px;
+}
+
+#thoughts-icon {
+    position: absolute;
+    top: 50px;
+    left: 150px;
+}
+
+/* icon image size */
+.icon-image {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 4px;
+    image-rendering: pixelated; /* optional retro effect */
+}
+
+
+
+/* Popup Styles */
+.popup {
+    position: absolute;
+    background: #c0c0c0;
+    border: 2px outset #c0c0c0;
+    border-radius: 4px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    min-width: 200px;
+    max-width: 300px;
+    z-index: 2000;
+    font-family: 'Chicago', 'Monaco', 'Courier New', monospace;
+    font-size: 12px;
+    animation: popupAppear 0.3s ease-out;
+    cursor: move;
+}
+
+/* App popups (centered) */
+.popup.app-popup {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 300px;
+    max-width: 400px;
+}
+
+/* When dragging, remove transform */
+.popup.dragging {
+    transform: none !important;
+}
+
+.popup-header {
+    background: linear-gradient(to bottom, #dd8af9 0%, #a10b92 100%);
+    color: white;
+    padding: 4px 8px;
+    font-weight: bold;
+    font-size: 11px;
+    border-bottom: 1px solid #a10b92;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.popup-close {
+    background: #ddbcdc;
+    border: 1px outset #c0c0c0;
+    width: 16px;
+    height: 14px;
+    font-size: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup-close:active {
+    border: 1px inset #c0c0c0;
+}
+
+.popup-content {
+    padding: 12px;
+    background: #c0c0c0;
+    color: #000;
+    line-height: 1.4;
+}
+
+.popup-buttons {
+    padding: 8px;
+    background: #c0c0c0;
+    border-top: 1px solid #808080;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.popup-button {
+    background: #d4c3d4;
+    border: 1px outset #ddbcdc;
+    padding: 4px 12px;
+    font-size: 11px;
+    cursor: pointer;
+    min-width: 60px;
+}
+
+.popup-button:active {
+    border: 1px inset #c0c0c0;
+}
+
+.popup-button:hover {
+    background: #d0d0d0;
+}
+
+/* Animations */
+@keyframes popupAppear {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes popupShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.popup.shake {
+    animation: popupShake 0.5s ease-in-out;
+}
+
+/* Clunky cursor effects */
+.desktop-icon, .popup-button, .popup-close {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="16" height="16" fill="black"/><rect x="1" y="1" width="14" height="14" fill="white"/><rect x="2" y="2" width="12" height="12" fill="black"/></svg>'), auto;
+}
+
+/* Desktop pattern overlay for authenticity */
+.desktop::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.1) 1px, transparent 1px),
+        radial-gradient(circle at 80% 80%, rgba(0,0,0,0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Icon selection effect */
+.desktop-icon.selected {
+    background: rgba(0, 0, 255, 0.3);
+    border: 1px dashed #0000ff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .desktop-icon {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .icon-image {
+        font-size: 24px;
+    }
+    
+    .icon-label {
+        font-size: 9px;
+    }
+    
+    .popup {
+        min-width: 150px;
+        max-width: 250px;
+    }
+}
