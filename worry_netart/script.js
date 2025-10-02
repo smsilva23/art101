@@ -1,34 +1,33 @@
 // Nervous thoughts array - can be modified by user
 let nervousThoughts = [
     "What if I'm not good enough?",
-    "Did I forget to turn off the stove?",
-    "Everyone is probably judging me right now",
-    "What if I said something wrong?",
-    "I should have done better",
-    "What if I'm annoying everyone?",
-    "Did I lock the door?",
-    "What if they don't like me?",
-    "I'm probably going to mess this up",
+    "Did I lock the car?",
+    "Idk if I'm prepared for sectionals",
+    "What if I completely blank on my exam next week",
+    "Could I have done better?",
+    "waiting for a text from my boss...",
+    "Did I lock up the house?",
+    "What if I have no friends",
     "What if I'm not prepared enough?",
-    "Everyone else seems to have it together",
-    "What if I'm being too much?",
+    "What if the kids at work don't like me",
     "Did I remember everything?",
-    "What if I'm wasting their time?",
+    "What if I don't make it there on time?",
     "I should have been more careful",
     "Did I make the right choice?",
     "What if I'm not smart enough?",
     "I'm probably overthinking this",
-    "What if I'm being too sensitive?",
+    "Am I being too sensitive?",
     "Did I miss something important?",
     "What if I'm not ready for this?",
-    "Everyone probably thinks I'm incompetent",
-    "What if I'm making a mistake?",
+    "Sometime I feel like I'm incompetent",
     "I should have asked for help",
+    "We're doing full runthrough today what if I don't know my parts",
     "What if I'm not cut out for this?",
-    "Did I check everything twice?",
-    "What if I'm being too dramatic?",
+    "Did I turn that in?",
     "I'm probably just being paranoid",
-    "What if I'm not as good as I think I am?"
+    "What if I'm not as good as I think I am?",
+    "I'm not even playing today why am I nervous",
+    "Concert is coming up I should probably practice tonight"
 ];
 
 // User's custom worries
@@ -212,7 +211,7 @@ function openTrashApp() {
         "Deleted worry: 'Everyone is judging me'",
         "Deleted worry: 'I should have done better'",
         "Deleted worry: 'What if I'm annoying everyone?'",
-        "Deleted worry: 'I'm probably going to mess this up'"
+        "Deleted worry: 'Did I sumbit that properly?'"
     ];
     
     const popup = createCustomPopup(
@@ -260,7 +259,7 @@ function openWorryTracker() {
 
 // Mind Palace App - Opens the worry jar page
 function openMindPalace() {
-    // Navigate to the Mind Palace page
+
     window.location.href = 'mind_palace.html';
 }
 
@@ -269,7 +268,7 @@ function openThoughtJournal() {
     const journalEntries = [
         "3:47 PM - What if I'm not prepared for tomorrow's meeting?",
         "2:23 PM - Did I remember to call mom back?",
-        "11:42 AM - What if I'm wasting my time here?",
+        "11:42 AM - Did my interview go well?",
         "10:30 AM - I should have been more careful with that email",
         "9:15 AM - What if I'm not cut out for this job?",
         "8:45 AM - Did I lock the car? I think I did...",
