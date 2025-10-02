@@ -211,7 +211,7 @@ function openTrashApp() {
         "Deleted worry: 'Everyone is judging me'",
         "Deleted worry: 'I should have done better'",
         "Deleted worry: 'What if I'm annoying everyone?'",
-        "Deleted worry: 'Did I sumbit that properly?'"
+        "Deleted worry: 'Did I submit that properly?'"
     ];
     
     const popup = createCustomPopup(
