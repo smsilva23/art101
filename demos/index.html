@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Collection - Sydney Silva</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .back-link {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 1.1em;
+            margin-bottom: 50px;
+            opacity: 0.9;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .project-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .project-title {
+            font-size: 1.3em;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+        
+        .project-description {
+            margin-bottom: 18px;
+            line-height: 1.5;
+            opacity: 0.9;
+            font-size: 0.95em;
+        }
+        
+        .project-link {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+        
+        .project-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../" class="back-link">← Back to Portfolio</a>
+        
+        <h1>Demo Collection</h1>
+        <p class="subtitle">Interactive experiments and explorations</p>
+        
+        <div class="projects-grid">
+            <div class="project-card">
+                <h2 class="project-title">👨‍👩‍👧‍👦 Family Portraits</h2>
+                <p class="project-description">A personal collection celebrating family connections and memories.</p>
+                <a href="family_portraits/" class="project-link">View Portraits</a>
+            </div>
+            
+            <div class="project-card">
+                <h2 class="project-title">☕ Tea Demo</h2>
+                <p class="project-description">An elegant tea ceremony experience with beautiful styling and atmosphere.</p>
+                <a href="tea_demo/" class="project-link">Sip Some Tea</a>
+            </div>
+            
+            <div class="project-card">
+                <h2 class="project-title">🐿️ Squirrel Visualization</h2>
+                <p class="project-description">Interactive data visualization exploring squirrel behavior and patterns.</p>
+                <a href="demo_10:7/squirrel_visualization.html" class="project-link">Watch the Squirrels</a>
+            </div>
+            
+            <div class="project-card">
+                <h2 class="project-title">🎨 Demo 10:7</h2>
+                <p class="project-description">Collection of interactive demos and visualizations from demo session.</p>
+                <a href="demo_10:7/" class="project-link">Browse Demos</a>
+            </div>
+            
+            <div class="project-card">
+                <h2 class="project-title">🚀 Demo 9:18</h2>
+                <p class="project-description">Early interactive experiments and prototypes.</p>
+                <a href="demo_9:18/" class="project-link">Explore</a>
+            </div>
+            
+            <div class="project-card">
+                <h2 class="project-title">💻 JavaScript Demos</h2>
+                <p class="project-description">JavaScript-powered interactive experiences and experiments.</p>
+                <a href="demo_js/" class="project-link">Try It Out</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Demo Collection • Sydney Silva Art101</p>
+        </div>
+    </div>
+</body>
+</html>
