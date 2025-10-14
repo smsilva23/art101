@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mythological Realm - Paper.js Animation</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.17/paper-full.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+            color: white;
+        }
+        
+        canvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        .info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #ffd700;
+            font-size: 16px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            z-index: 100;
+            pointer-events: none;
+            max-width: 300px;
+        }
+        
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: #ffd700;
+            font-size: 12px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            z-index: 100;
+            pointer-events: none;
+        }
+        
+        .god-info {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 14px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            z-index: 100;
+            pointer-events: none;
+            max-width: 200px;
+            background: rgba(0,0,0,0.5);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <div class="info">
+        <h2>🏛️ Mythological Realm</h2>
+        <p>Hover over the gods to learn about them. Click to summon their power!</p>
+    </div>
+    
+    <div class="god-info" id="godInfo">
+        <div id="godName">Move your mouse over a god</div>
+        <div id="godDescription"></div>
+        <div id="godDomain"></div>
+    </div>
+    
+    <div class="controls">
+        <p>🌟 Hover: Learn about gods<br>
+        ⚡ Click: Summon divine powers<br>
+        🌊 Scroll: Change realm atmosphere</p>
+    </div>
+    
+    <script type="text/paperscript" canvas="canvas">
+        // Mythology Dataset - Greek Gods and their attributes
+        const mythologyData = [
+            {
+                name: "Zeus",
+                domain: "Sky & Thunder",
+                symbol: "⚡",
+                color: "#FFD700",
+                description: "King of the gods, wielder of thunderbolts",
+                power: "Lightning",
+                realm: "Olympus",
+                size: 25,
+                speed: 1.5,
+                effects: ["lightning", "storm"]
+            },
+            {
+                name: "Poseidon",
+                domain: "Sea & Earthquakes",
+                symbol: "🌊",
+                color: "#4169E1",
+                description: "God of the seas, earthquakes, and horses",
+                power: "Waves",
+                realm: "Atlantis",
+                size: 22,
+                speed: 1.2,
+                effects: ["waves", "earthquake"]
+            },
+            {
+                name: "Hades",
+                domain: "Underworld",
+                symbol: "💀",
+                color: "#8B0000",
+                description: "God of the dead and the underworld",
+                power: "Shadows",
+                realm: "Underworld",
+                size: 20,
+                speed: 0.8,
+                effects: ["shadow", "fire"]
+            },
+            {
+                name: "Athena",
+                domain: "Wisdom & War",
+                symbol: "🦉",
+                color: "#9370DB",
+                description: "Goddess of wisdom, courage, and warfare",
+                power: "Wisdom",
+                realm: "Athens",
+                size: 18,
+                speed: 2.0,
+                effects: ["wisdom", "shield"]
+            },
+            {
+                name: "Apollo",
+                domain: "Sun & Music",
+                symbol: "☀️",
+                color: "#FF6347",
+                description: "God of the sun, music, poetry, and prophecy",
+                power: "Light",
+                realm: "Delphi",
+                size: 24,
+                speed: 2.5,
+                effects: ["light", "music"]
+            },
+            {
+                name: "Artemis",
+                domain: "Moon & Hunt",
+                symbol: "🌙",
+                color: "#C0C0C0",
+                description: "Goddess of the hunt, moon, and wilderness",
+                power: "Moonbeams",
+                realm: "Forest",
+                size: 19,
+                speed: 1.8,
+                effects: ["moonlight", "arrows"]
+            },
+            {
+                name: "Ares",
+                domain: "War",
+                symbol: "⚔️",
+                color: "#DC143C",
+                description: "God of war, courage, and civil order",
+                power: "Battle",
+                realm: "Thrace",
+                size: 23,
+                speed: 1.0,
+                effects: ["war", "fire"]
+            },
+            {
+                name: "Aphrodite",
+                domain: "Love & Beauty",
+                symbol: "💖",
+                color: "#FF69B4",
+                description: "Goddess of love, beauty, and desire",
+                power: "Charm",
+                realm: "Cyprus",
+                size: 21,
+                speed: 1.6,
+                effects: ["love", "roses"]
+            },
+            {
+                name: "Hermes",
+                domain: "Messenger & Travel",
+                symbol: "👟",
+                color: "#32CD32",
+                description: "Messenger god, patron of travelers and thieves",
+                power: "Speed",
+                realm: "Everywhere",
+                size: 16,
+                speed: 3.0,
+                effects: ["speed", "wings"]
+            },
+            {
+                name: "Dionysus",
+                domain: "Wine & Festivity",
+                symbol: "🍷",
+                color: "#8B4513",
+                description: "God of wine, fertility, and theater",
+                power: "Ecstasy",
+                realm: "Nysa",
+                size: 20,
+                speed: 1.3,
+                effects: ["wine", "celebration"]
+            }
+        ];
+
+        // Global variables
+        let gods = [];
+        let effects = [];
+        let mouse = view.center;
+        let atmosphere = 0.5;
+        let frameCount = 0;
+        let selectedGod = null;
+
+        // Create a god entity
+        function createGod(godData, x, y) {
+            const god = new Group();
+            
+            // Main circle
+            const circle = new Path.Circle({
+                center: [x, y],
+                radius: godData.size,
+                fillColor: godData.color,
+                strokeColor: 'white',
+                strokeWidth: 2,
+                opacity: 0.9
+            });
+            
+            // Symbol text
+            const symbol = new PointText({
+                point: [x - 8, y + 5],
+                content: godData.symbol,
+                fontSize: 20,
+                fillColor: 'white',
+                justification: 'center'
+            });
+            
+            god.addChild(circle);
+            god.addChild(symbol);
+            
+            // Add properties
+            god.data = godData;
+            god.velocity = new Point(
+                (Math.random() - 0.5) * godData.speed * 2,
+                (Math.random() - 0.5) * godData.speed * 2
+            );
+            god.originalPosition = new Point(x, y);
+            god.hovered = false;
+            god.powerActive = false;
+            god.powerCooldown = 0;
+            
+            return god;
+        }
+
+        // Create divine effects
+        function createEffect(type, position, color) {
+            const effect = new Group();
+            
+            switch(type) {
+                case 'lightning':
+                    const bolt = new Path({
+                        segments: [
+                            position + new Point(-10, -20),
+                            position + new Point(5, -10),
+                            position + new Point(-5, 0),
+                            position + new Point(8, 10),
+                            position + new Point(-3, 20)
+                        ],
+                        strokeColor: '#FFD700',
+                        strokeWidth: 3,
+                        opacity: 0.8
+                    });
+                    effect.addChild(bolt);
+                    break;
+                    
+                case 'waves':
+                    for(let i = 0; i < 5; i++) {
+                        const wave = new Path.Arc({
+                            center: position + new Point(i * 15, 0),
+                            from: [0, -10],
+                            to: [0, 10],
+                            radius: 8,
+                            strokeColor: color,
+                            strokeWidth: 2,
+                            opacity: 0.6
+                        });
+                        effect.addChild(wave);
+                    }
+                    break;
+                    
+                case 'light':
+                    const rays = new Path.Star({
+                        center: position,
+                        points: 8,
+                        radius1: 15,
+                        radius2: 25,
+                        fillColor: color,
+                        opacity: 0.7
+                    });
+                    effect.addChild(rays);
+                    break;
+                    
+                case 'wisdom':
+                    const owl = new Path.Circle({
+                        center: position,
+                        radius: 12,
+                        fillColor: color,
+                        opacity: 0.6
+                    });
+                    const owlText = new PointText({
+                        point: position + new Point(-4, 3),
+                        content: '🦉',
+                        fontSize: 16,
+                        fillColor: 'white'
+                    });
+                    effect.addChild(owl);
+                    effect.addChild(owlText);
+                    break;
+            }
+            
+            effect.life = 1.0;
+            effect.type = type;
+            return effect;
+        }
+
+        // Initialize gods
+        function initializeGods() {
+            const numGods = mythologyData.length;
+            for (let i = 0; i < numGods; i++) {
+                const godData = mythologyData[i];
+                const angle = (i / numGods) * Math.PI * 2;
+                const radius = Math.min(view.size.width, view.size.height) * 0.3;
+                const x = view.center.x + Math.cos(angle) * radius;
+                const y = view.center.y + Math.sin(angle) * radius;
+                
+                gods.push(createGod(godData, x, y));
+            }
+        }
+
+        // Update god physics and behavior
+        function updateGod(god) {
+            // Reduce cooldown
+            if (god.powerCooldown > 0) {
+                god.powerCooldown--;
+            }
+            
+            // Gentle floating motion
+            god.position += god.velocity;
+            
+            // Keep gods within bounds with soft boundaries
+            if (god.bounds.left < 50 || god.bounds.right > view.size.width - 50) {
+                god.velocity.x *= -0.8;
+                god.position.x = Math.max(50, Math.min(view.size.width - 50, god.position.x));
+            }
+            
+            if (god.bounds.top < 50 || god.bounds.bottom > view.size.height - 50) {
+                god.velocity.y *= -0.8;
+                god.position.y = Math.max(50, Math.min(view.size.height - 50, god.position.y));
+            }
+            
+            // Mouse interaction
+            const mouseDistance = god.position.getDistance(mouse);
+            const hoverRadius = 80;
+            
+            if (mouseDistance < hoverRadius) {
+                god.hovered = true;
+                selectedGod = god;
+                
+                // Attract to mouse
+                const force = (hoverRadius - mouseDistance) / hoverRadius * 0.5;
+                const direction = (mouse - god.position).normalize();
+                god.velocity += direction * force;
+                
+                // Glow effect
+                god.children[0].strokeWidth = 4;
+                god.children[0].strokeColor = '#FFD700';
+                
+                // Gentle pulsing
+                god.scaling = 1 + Math.sin(frameCount * 0.2) * 0.1;
+            } else {
+                god.hovered = false;
+                god.children[0].strokeWidth = 2;
+                god.children[0].strokeColor = 'white';
+                god.scaling = 1;
+            }
+            
+            // Power activation
+            if (god.powerActive && god.powerCooldown <= 0) {
+                god.data.effects.forEach(effectType => {
+                    const effect = createEffect(effectType, god.position, god.data.color);
+                    effects.push(effect);
+                });
+                god.powerCooldown = 120; // 2 seconds at 60fps
+                god.powerActive = false;
+            }
+            
+            return true;
+        }
+
+        // Update effects
+        function updateEffects() {
+            for (let i = effects.length - 1; i >= 0; i--) {
+                const effect = effects[i];
+                effect.life -= 0.02;
+                effect.opacity = effect.life;
+                
+                if (effect.life <= 0) {
+                    effect.remove();
+                    effects.splice(i, 1);
+                }
+            }
+        }
+
+        // Update UI information
+        function updateUI() {
+            const godInfo = document.getElementById('godInfo');
+            const godName = document.getElementById('godName');
+            const godDescription = document.getElementById('godDescription');
+            const godDomain = document.getElementById('godDomain');
+            
+            if (selectedGod && selectedGod.hovered) {
+                godName.textContent = selectedGod.data.symbol + ' ' + selectedGod.data.name;
+                godDescription.textContent = selectedGod.data.description;
+                godDomain.textContent = `Domain: ${selectedGod.data.domain} | Power: ${selectedGod.data.power}`;
+                godInfo.style.display = 'block';
+            } else {
+                godInfo.style.display = 'none';
+            }
+        }
+
+        // Initialize the realm
+        initializeGods();
+
+        // Animation loop
+        view.onFrame = function(event) {
+            frameCount++;
+            
+            // Update gods
+            gods.forEach(updateGod);
+            
+            // Update effects
+            updateEffects();
+            
+            // Update UI
+            updateUI();
+            
+            // Add atmospheric particles
+            if (frameCount % 30 === 0) {
+                const sparkle = new Path.Circle({
+                    center: [Math.random() * view.size.width, Math.random() * view.size.height],
+                    radius: 2,
+                    fillColor: {
+                        hue: Math.random() * 360,
+                        saturation: 0.8,
+                        lightness: 0.9
+                    },
+                    opacity: 0.6
+                });
+                
+                sparkle.velocity = new Point(
+                    (Math.random() - 0.5) * 2,
+                    (Math.random() - 0.5) * 2
+                );
+                sparkle.life = 1.0;
+                
+                effects.push(sparkle);
+            }
+        };
+
+        // Mouse interactions
+        view.onMouseMove = function(event) {
+            mouse = event.point;
+        };
+
+        // Click to activate god powers
+        view.onMouseDown = function(event) {
+            gods.forEach(god => {
+                const distance = god.position.getDistance(event.point);
+                if (distance < 60 && god.powerCooldown <= 0) {
+                    god.powerActive = true;
+                }
+            });
+        };
+
+        // Scroll to change atmosphere
+        view.onWheel = function(event) {
+            atmosphere += event.delta.y * 0.01;
+            atmosphere = Math.max(0.1, Math.min(1.0, atmosphere));
+            
+            // Change background based on atmosphere
+            const hue = (atmosphere - 0.1) * 200; // 0 to 180 degrees
+            document.body.style.background = 
+                `radial-gradient(ellipse at center, hsl(${hue}, 70%, 15%) 0%, hsl(${hue + 20}, 60%, 10%) 50%, hsl(${hue + 40}, 50%, 5%) 100%)`;
+        };
+
+        // Handle window resize
+        view.onResize = function(event) {
+            gods.forEach(god => {
+                if (god.position.x < 0) god.position.x = god.data.size;
+                if (god.position.x > view.size.width) god.position.x = view.size.width - god.data.size;
+                if (god.position.y < 0) god.position.y = god.data.size;
+                if (god.position.y > view.size.height) god.position.y = view.size.height - god.data.size;
+            });
+        };
+    </script>
+</body>
+</html>

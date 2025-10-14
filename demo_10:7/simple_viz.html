@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squirrel Journal - Simple Visualization</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .controls {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            margin: 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        
+        .visualization {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .day {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            border: 3px solid transparent;
+        }
+        
+        .day:hover {
+            transform: scale(1.1);
+            z-index: 10;
+        }
+        
+        .normal-day {
+            background: #87CEEB;
+            border-color: #4682B4;
+        }
+        
+        .squirrel-day {
+            background: #8B4513;
+            border-color: #654321;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .day-info {
+            position: absolute;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 20;
+            display: none;
+        }
+        
+        .stats {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        .correlation-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .positive { color: #e74c3c; font-weight: bold; }
+        .negative { color: #3498db; font-weight: bold; }
+        .neutral { color: #95a5a6; }
+        
+        .highlight {
+            animation: highlight 1s ease-in-out;
+        }
+        
+        @keyframes highlight {
+            0% { background: #FFD700; }
+            100% { background: inherit; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐿️ Squirrel Journal Visualization</h1>
+        
+        <div class="controls">
+            <button onclick="showSquirrelDays()">🐿️ Highlight Squirrel Days</button>
+            <button onclick="showCorrelations()">📊 Show Strong Correlations</button>
+            <button onclick="animateEvents()">✨ Animate Events</button>
+            <button onclick="reset()">🔄 Reset</button>
+        </div>
+        
+        <div class="visualization" id="visualization">
+            <!-- Days will be generated here -->
+        </div>
+        
+        <div class="stats">
+            <h3>📈 Event Correlations with Squirrel Transformations</h3>
+            <div id="correlationStats"></div>
+        </div>
+    </div>
+
+    <script>
+        // Journal data
+        var JOURNAL = [
+            {"events":["carrot","exercise","weekend"],"squirrel":false},
+            {"events":["bread","pudding","brushed teeth","weekend","touched tree"],"squirrel":false},
+            {"events":["carrot","nachos","brushed teeth","cycling","weekend"],"squirrel":false},
+            {"events":["brussel sprouts","ice cream","brushed teeth","computer","weekend"],"squirrel":false},
+            {"events":["potatoes","candy","brushed teeth","exercise","weekend","dentist"],"squirrel":false},
+            {"events":["brussel sprouts","pudding","brushed teeth","running","weekend"],"squirrel":false},
+            {"events":["pizza","brushed teeth","computer","work","touched tree"],"squirrel":false},
+            {"events":["bread","beer","brushed teeth","cycling","work"],"squirrel":false},
+            {"events":["cauliflower","brushed teeth","work"],"squirrel":false},
+            {"events":["pizza","brushed teeth","cycling","work"],"squirrel":false},
+            {"events":["lasagna","nachos","brushed teeth","work"],"squirrel":false},
+            {"events":["brushed teeth","weekend","touched tree"],"squirrel":false},
+            {"events":["lettuce","brushed teeth","television","weekend"],"squirrel":false},
+            {"events":["spaghetti","brushed teeth","work"],"squirrel":false},
+            {"events":["brushed teeth","computer","work"],"squirrel":false},
+            {"events":["lettuce","nachos","brushed teeth","work"],"squirrel":false},
+            {"events":["carrot","brushed teeth","running","work"],"squirrel":false},
+            {"events":["brushed teeth","work"],"squirrel":false},
+            {"events":["cauliflower","reading","weekend"],"squirrel":false},
+            {"events":["bread","brushed teeth","weekend"],"squirrel":false},
+            {"events":["lasagna","brushed teeth","exercise","work"],"squirrel":false},
+            {"events":["spaghetti","brushed teeth","reading","work"],"squirrel":false},
+            {"events":["carrot","ice cream","brushed teeth","television","work"],"squirrel":false},
+            {"events":["spaghetti","nachos","work"],"squirrel":false},
+            {"events":["cauliflower","ice cream","brushed teeth","cycling","work"],"squirrel":false},
+            {"events":["spaghetti","peanuts","computer","weekend"],"squirrel":true},
+            {"events":["potatoes","ice cream","brushed teeth","computer","weekend"],"squirrel":false},
+            {"events":["potatoes","ice cream","brushed teeth","work"],"squirrel":false},
+            {"events":["peanuts","brushed teeth","running","work"],"squirrel":false},
+            {"events":["potatoes","exercise","work"],"squirrel":false},
+            {"events":["pizza","ice cream","computer","work"],"squirrel":false},
+            {"events":["lasagna","ice cream","work"],"squirrel":false},
+            {"events":["cauliflower","candy","reading","weekend"],"squirrel":false},
+            {"events":["lasagna","nachos","brushed teeth","running","weekend"],"squirrel":false},
+            {"events":["potatoes","brushed teeth","work"],"squirrel":false},
+            {"events":["carrot","work"],"squirrel":false},
+            {"events":["pizza","beer","work","dentist"],"squirrel":false},
+            {"events":["lasagna","pudding","cycling","work"],"squirrel":false},
+            {"events":["spaghetti","brushed teeth","reading","work"],"squirrel":false},
+            {"events":["spaghetti","pudding","television","weekend"],"squirrel":false},
+            {"events":["bread","brushed teeth","exercise","weekend"],"squirrel":false},
+            {"events":["lasagna","peanuts","work"],"squirrel":true},
+            {"events":["pizza","work"],"squirrel":false},
+            {"events":["potatoes","exercise","work"],"squirrel":false},
+            {"events":["brushed teeth","exercise","work"],"squirrel":false},
+            {"events":["spaghetti","brushed teeth","television","work"],"squirrel":false},
+            {"events":["pizza","cycling","weekend"],"squirrel":false},
+            {"events":["carrot","brushed teeth","weekend"],"squirrel":false},
+            {"events":["carrot","beer","brushed teeth","work"],"squirrel":false},
+            {"events":["pizza","peanuts","candy","work"],"squirrel":true},
+            {"events":["carrot","peanuts","brushed teeth","reading","work"],"squirrel":false},
+            {"events":["potatoes","peanuts","brushed teeth","work"],"squirrel":false},
+            {"events":["carrot","nachos","brushed teeth","exercise","work"],"squirrel":false},
+            {"events":["pizza","peanuts","brushed teeth","television","weekend"],"squirrel":false},
+            {"events":["lasagna","brushed teeth","cycling","weekend"],"squirrel":false},
+            {"events":["cauliflower","peanuts","brushed teeth","computer","work","touched tree"],"squirrel":false},
+            {"events":["lettuce","brushed teeth","television","work"],"squirrel":false},
+            {"events":["potatoes","brushed teeth","computer","work"],"squirrel":false},
+            {"events":["bread","candy","work"],"squirrel":false},
+            {"events":["potatoes","nachos","work"],"squirrel":false},
+            {"events":["carrot","pudding","brushed teeth","weekend"],"squirrel":false},
+            {"events":["carrot","brushed teeth","exercise","weekend","touched tree"],"squirrel":false},
+            {"events":["brussel sprouts","running","work"],"squirrel":false},
+            {"events":["brushed teeth","work"],"squirrel":false},
+            {"events":["lettuce","brushed teeth","running","work"],"squirrel":false},
+            {"events":["candy","brushed teeth","work"],"squirrel":false},
+            {"events":["brussel sprouts","brushed teeth","computer","work"],"squirrel":false},
+            {"events":["bread","brushed teeth","weekend"],"squirrel":false},
+            {"events":["cauliflower","brushed teeth","weekend"],"squirrel":false},
+            {"events":["spaghetti","candy","television","work","touched tree"],"squirrel":false},
+            {"events":["carrot","pudding","brushed teeth","work"],"squirrel":false},
+            {"events":["lettuce","brushed teeth","work"],"squirrel":false},
+            {"events":["carrot","ice cream","brushed teeth","cycling","work"],"squirrel":false},
+            {"events":["pizza","brushed teeth","work"],"squirrel":false},
+            {"events":["spaghetti","peanuts","exercise","weekend"],"squirrel":true},
+            {"events":["bread","beer","computer","weekend","touched tree"],"squirrel":false},
+            {"events":["brushed teeth","running","work"],"squirrel":false},
+            {"events":["lettuce","peanuts","brushed teeth","work","touched tree"],"squirrel":false},
+            {"events":["lasagna","brushed teeth","television","work"],"squirrel":false},
+            {"events":["cauliflower","brushed teeth","running","work"],"squirrel":false},
+            {"events":["carrot","brushed teeth","running","work"],"squirrel":false},
+            {"events":["carrot","reading","weekend"],"squirrel":false},
+            {"events":["carrot","peanuts","reading","weekend"],"squirrel":true},
+            {"events":["potatoes","brushed teeth","running","work"],"squirrel":false},
+            {"events":["lasagna","ice cream","work","touched tree"],"squirrel":false},
+            {"events":["cauliflower","peanuts","brushed teeth","cycling","work"],"squirrel":false},
+            {"events":["pizza","brushed teeth","running","work"],"squirrel":false},
+            {"events":["lettuce","brushed teeth","work"],"squirrel":false},
+            {"events":["bread","brushed teeth","television","weekend"],"squirrel":false},
+            {"events":["cauliflower","peanuts","brushed teeth","weekend"],"squirrel":false}
+        ];
+
+        // Phi function
+        function phi(table) {
+            return (table[3] * table[0] - table[2] * table[1]) /
+                Math.sqrt((table[2] + table[3]) *
+                (table[0] + table[1]) *
+                (table[1] + table[3]) *
+                (table[0] + table[2]));
+        }
+        
+        function tableFor(event, journal) {
+            let table = [0, 0, 0, 0];
+            for (let i = 0; i < journal.length; i++) {
+                let entry = journal[i];
+                let index = 0;
+                if (entry.events.includes(event)) index += 1;
+                if (entry.squirrel) index += 2;
+                table[index] += 1;
+            }
+            return table;
+        }
+        
+        function journalEvents(journal) {
+            let events = [];
+            for (let entry of journal) {
+                for (let event of entry.events) {
+                    if (!events.includes(event)) {
+                        events.push(event);
+                    }
+                }
+            }
+            return events;
+        }
+
+        // Initialize visualization
+        function init() {
+            const container = document.getElementById('visualization');
+            container.innerHTML = '';
+            
+            JOURNAL.forEach((day, index) => {
+                const dayElement = document.createElement('div');
+                dayElement.className = `day ${day.squirrel ? 'squirrel-day' : 'normal-day'}`;
+                dayElement.textContent = index + 1;
+                dayElement.dataset.dayIndex = index;
+                
+                // Add event info on hover
+                const info = document.createElement('div');
+                info.className = 'day-info';
+                info.innerHTML = `
+                    <strong>Day ${index + 1}</strong><br>
+                    Events: ${day.events.length}<br>
+                    ${day.squirrel ? '🐿️ SQUIRREL!' : 'Normal day'}<br>
+                    ${day.events.slice(0, 3).join(', ')}${day.events.length > 3 ? '...' : ''}
+                `;
+                dayElement.appendChild(info);
+                
+                dayElement.addEventListener('mouseenter', () => {
+                    info.style.display = 'block';
+                });
+                
+                dayElement.addEventListener('mouseleave', () => {
+                    info.style.display = 'none';
+                });
+                
+                container.appendChild(dayElement);
+            });
+            
+            displayCorrelations();
+        }
+
+        function displayCorrelations() {
+            const statsDiv = document.getElementById('correlationStats');
+            statsDiv.innerHTML = '';
+            
+            const events = journalEvents(JOURNAL);
+            const correlations = [];
+            
+            events.forEach(event => {
+                const correlation = phi(tableFor(event, JOURNAL));
+                if (Math.abs(correlation) > 0.1) {
+                    correlations.push({event, correlation});
+                }
+            });
+            
+            correlations.sort((a, b) => Math.abs(b.correlation) - Math.abs(a.correlation));
+            
+            correlations.slice(0, 10).forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'correlation-item';
+                
+                let className = 'neutral';
+                if (Math.abs(item.correlation) > 0.2) {
+                    className = item.correlation > 0 ? 'positive' : 'negative';
+                }
+                
+                div.innerHTML = `
+                    <span>${item.event}</span>
+                    <span class="${className}">${item.correlation.toFixed(3)}</span>
+                `;
+                statsDiv.appendChild(div);
+            });
+        }
+
+        function showSquirrelDays() {
+            const days = document.querySelectorAll('.day');
+            days.forEach(day => {
+                if (JOURNAL[parseInt(day.dataset.dayIndex)].squirrel) {
+                    day.classList.add('highlight');
+                    setTimeout(() => day.classList.remove('highlight'), 1000);
+                }
+            });
+        }
+
+        function showCorrelations() {
+            const days = document.querySelectorAll('.day');
+            const events = journalEvents(JOURNAL);
+            
+            events.forEach(event => {
+                const correlation = phi(tableFor(event, JOURNAL));
+                if (Math.abs(correlation) > 0.2) {
+                    JOURNAL.forEach((day, index) => {
+                        if (day.events.includes(event)) {
+                            const dayElement = days[index];
+                            dayElement.style.borderColor = correlation > 0 ? '#e74c3c' : '#3498db';
+                            dayElement.style.borderWidth = '5px';
+                        }
+                    });
+                }
+            });
+            
+            setTimeout(() => {
+                days.forEach((day, index) => {
+                    const isSquirrel = JOURNAL[index].squirrel;
+                    day.style.borderColor = isSquirrel ? '#654321' : '#4682B4';
+                    day.style.borderWidth = '3px';
+                });
+            }, 3000);
+        }
+
+        function animateEvents() {
+            const days = document.querySelectorAll('.day');
+            const events = journalEvents(JOURNAL);
+            
+            // Highlight days with specific events
+            ['peanuts', 'weekend', 'pizza', 'exercise'].forEach((event, i) => {
+                setTimeout(() => {
+                    JOURNAL.forEach((day, index) => {
+                        if (day.events.includes(event)) {
+                            days[index].classList.add('highlight');
+                            setTimeout(() => days[index].classList.remove('highlight'), 800);
+                        }
+                    });
+                }, i * 500);
+            });
+        }
+
+        function reset() {
+            const days = document.querySelectorAll('.day');
+            days.forEach(day => {
+                day.classList.remove('highlight');
+                day.style.borderColor = '';
+                day.style.borderWidth = '';
+            });
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
+
