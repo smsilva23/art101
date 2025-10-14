@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sydney Silva - Art101 Portfolio</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 50px;
+            opacity: 0.9;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .project-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .project-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        
+        .project-description {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        
+        .project-link {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .project-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sydney Silva</h1>
+        <p class="subtitle">Art101 Digital Portfolio</p>
+        
+        <div class="projects-grid">
+            <div class="project-card">
+                <h2 class="project-title">🎭 Haunted Mansion</h2>
+                <p class="project-description">An interactive haunted mansion experience with multiple rooms and spooky surprises.</p>
+                <a href="hauntedmansion/" class="project-link">Explore the Mansion</a>
+            </div>
+            
+            <div class="project-card">
+                <h2 class="project-title">🧠 Worry Net Art</h2>
+                <p class="project-description">A digital exploration of thoughts and worries through interactive mind palace visualization.</p>
+                <a href="worry_netart/" class="project-link">Enter the Mind Palace</a>
+            </div>
+            
+            <div class="project-card">
+                <h2 class="project-title">👨‍👩‍👧‍👦 Family Portraits</h2>
+                <p class="project-description">A personal collection celebrating family connections and memories.</p>
+                <a href="family_portraits/" class="project-link">View Portraits</a>
+            </div>
+            
+            <div class="project-card">
+                <h2 class="project-title">☕ Tea Demo</h2>
+                <p class="project-description">An elegant tea ceremony experience with beautiful styling and atmosphere.</p>
+                <a href="tea_demo/" class="project-link">Sip Some Tea</a>
+            </div>
+            
+            <div class="project-card">
+                <h2 class="project-title">🐿️ Squirrel Visualization</h2>
+                <p class="project-description">Interactive data visualization exploring squirrel behavior and patterns.</p>
+                <a href="demo_10:7/squirrel_visualization.html" class="project-link">Watch the Squirrels</a>
+            </div>
+            
+            <div class="project-card">
+                <h2 class="project-title">🎨 Demo Collection</h2>
+                <p class="project-description">Various interactive demos and experiments showcasing different techniques.</p>
+                <a href="demo_10:7/" class="project-link">Browse Demos</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Welcome to my digital art portfolio • Created for Art101</p>
+        </div>
+    </div>
+</body>
+</html>
