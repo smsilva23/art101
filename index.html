@@ -259,25 +259,14 @@
         const navItems = document.querySelectorAll('.nav-item');
         const mainImage = document.getElementById('mainImage');
         
-        // Default images for each category
+        // Default emoji and specific emoji for each category
+        const defaultEmoji = '✨';
         const categoryImages = {
-            'About Me': ['👤', '🎭', '🌟', '💫'],
-            'Digital Media': ['💻', '🖥️', '📱', '⚡'],
-            '3D Works': ['🎨', '🏗️', '🔺', '📐'],
-            'Physical Art': ['🖼️', '🎨', '🖌️', '🖍️']
+            'About Me': '👤',
+            'Digital Media': '💻',
+            '3D Works': '🎨',
+            'Physical Art': '🖼️'
         };
-        
-        let currentCategory = 'About Me';
-        let imageIndex = 0;
-        
-        // Cycle through images for current category
-        function cycleImages() {
-            const images = categoryImages[currentCategory];
-            if (images && images.length > 0) {
-                imageIndex = (imageIndex + 1) % images.length;
-                mainImage.textContent = images[imageIndex];
-            }
-        }
         
         // Set up hover effects
         navItems.forEach(item => {
@@ -285,21 +274,18 @@
             const category = link.textContent.trim();
             
             item.addEventListener('mouseenter', () => {
-                currentCategory = category;
-                const images = categoryImages[category];
-                if (images && images.length > 0) {
-                    mainImage.textContent = images[0];
+                const emoji = categoryImages[category];
+                if (emoji) {
+                    mainImage.textContent = emoji;
                     mainImage.classList.add('hovered');
                 }
             });
             
             item.addEventListener('mouseleave', () => {
+                mainImage.textContent = defaultEmoji;
                 mainImage.classList.remove('hovered');
             });
         });
-        
-        // Start cycling through images
-        setInterval(cycleImages, 2000);
         
         // Add click handlers for future functionality
         navItems.forEach(item => {
