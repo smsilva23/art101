@@ -18,9 +18,12 @@
             min-height: 100vh;
             overflow-x: hidden;
             transition: background 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
         
-        /* Background variations for each category */
+        /* Background variations for each category - gradients */
         body.about-me {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
         }
@@ -35,6 +38,27 @@
         
         body.physical-art {
             background: linear-gradient(135deg, #a8edea 0%, #fed6e3 50%, #d299c2 100%);
+        }
+        
+        /* Background image variations for each category */
+        body.about-me-image {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/backgrounds/about-me-bg.jpg');
+        }
+        
+        body.digital-media-image {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/backgrounds/digital-media-bg.jpg');
+        }
+        
+        body.3d-works-image {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/backgrounds/3d-works-bg.jpg');
+        }
+        
+        body.physical-art-image {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/backgrounds/physical-art-bg.jpg');
+        }
+        
+        body.default-image {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/backgrounds/default-bg.jpg');
         }
         
         .container {
@@ -333,13 +357,52 @@
         // 3. Change the setImageContent calls from setImageContent(emoji, false) to setImageContent(categoryImagePaths[category], true)
         // 4. Change the default from setImageContent(defaultEmoji, false) to setImageContent('images/default.jpg', true)
         
-        // Background classes for each category
+        // TO SWITCH TO IMAGE BACKGROUNDS:
+        // 1. Create an 'images/backgrounds' folder in your repository
+        // 2. Add your background images: about-me-bg.jpg, digital-media-bg.jpg, 3d-works-bg.jpg, physical-art-bg.jpg, default-bg.jpg
+        // 3. Change setBackground(category, false) to setBackground(category, true)
+        // 4. Change resetBackground(false) to resetBackground(true)
+        // 5. Change the default body background to use 'default-image' class instead of gradient
+        
+        // Background classes for each category (gradients)
         const categoryBackgrounds = {
             'About Me': 'about-me',
             'Digital Media': 'digital-media',
             '3D Works': '3d-works',
             'Physical Art': 'physical-art'
         };
+        
+        // Background image classes for each category
+        const categoryBackgroundImages = {
+            'About Me': 'about-me-image',
+            'Digital Media': 'digital-media-image',
+            '3D Works': '3d-works-image',
+            'Physical Art': 'physical-art-image'
+        };
+        
+        // Function to set background (gradient or image)
+        function setBackground(category, useImages = false) {
+            document.body.className = '';
+            if (useImages) {
+                const backgroundClass = categoryBackgroundImages[category];
+                if (backgroundClass) {
+                    document.body.classList.add(backgroundClass);
+                }
+            } else {
+                const backgroundClass = categoryBackgrounds[category];
+                if (backgroundClass) {
+                    document.body.classList.add(backgroundClass);
+                }
+            }
+        }
+        
+        // Function to reset background to default
+        function resetBackground(useImages = false) {
+            document.body.className = '';
+            if (useImages) {
+                document.body.classList.add('default-image');
+            }
+        }
         
         // Get the navigation menu container
         const navMenu = document.querySelector('.nav-menu');
@@ -378,10 +441,7 @@
                     }, 200);
                     
                     // Change background smoothly
-                    if (backgroundClass) {
-                        document.body.className = '';
-                        document.body.classList.add(backgroundClass);
-                    }
+                    setBackground(category, false); // Change to true for image backgrounds
                 }
             });
         });
@@ -403,7 +463,7 @@
                 }, 200);
                 
                 // Remove all background classes to return to default
-                document.body.className = '';
+                resetBackground(false); // Change to true for image backgrounds
             }, 100); // Small delay to prevent flickering
         });
         
