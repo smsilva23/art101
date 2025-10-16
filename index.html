@@ -104,6 +104,11 @@
         
         .nav-menu {
             list-style: none;
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .nav-item {
@@ -299,35 +304,57 @@
             'Physical Art': 'physical-art'
         };
         
-        // Set up hover effects
+        // Get the navigation menu container
+        const navMenu = document.querySelector('.nav-menu');
+        let currentHoveredCategory = null;
+        let resetTimeout = null;
+        
+        // Set up hover effects for individual items
         navItems.forEach(item => {
             const link = item.querySelector('.nav-link');
             const category = link.textContent.trim();
             
             item.addEventListener('mouseenter', () => {
+                // Clear any pending reset
+                if (resetTimeout) {
+                    clearTimeout(resetTimeout);
+                    resetTimeout = null;
+                }
+                
                 const emoji = categoryImages[category];
                 const backgroundClass = categoryBackgrounds[category];
                 
-                // Add transitioning class for smooth emoji change
-                mainImage.classList.add('transitioning');
-                
-                // Change emoji after a brief delay
-                setTimeout(() => {
-                    if (emoji) {
-                        mainImage.textContent = emoji;
-                        mainImage.classList.remove('transitioning');
-                        mainImage.classList.add('hovered');
+                // Only change if this is a different category
+                if (currentHoveredCategory !== category) {
+                    currentHoveredCategory = category;
+                    
+                    // Add transitioning class for smooth emoji change
+                    mainImage.classList.add('transitioning');
+                    
+                    // Change emoji after a brief delay
+                    setTimeout(() => {
+                        if (emoji) {
+                            mainImage.textContent = emoji;
+                            mainImage.classList.remove('transitioning');
+                            mainImage.classList.add('hovered');
+                        }
+                    }, 200);
+                    
+                    // Change background smoothly
+                    if (backgroundClass) {
+                        document.body.className = '';
+                        document.body.classList.add(backgroundClass);
                     }
-                }, 200);
-                
-                // Change background smoothly
-                if (backgroundClass) {
-                    document.body.className = '';
-                    document.body.classList.add(backgroundClass);
                 }
             });
-            
-            item.addEventListener('mouseleave', () => {
+        });
+        
+        // Set up mouse leave for the entire navigation area
+        navMenu.addEventListener('mouseleave', () => {
+            // Add a small delay to prevent flickering when moving between items
+            resetTimeout = setTimeout(() => {
+                currentHoveredCategory = null;
+                
                 // Add transitioning class for smooth return
                 mainImage.classList.add('transitioning');
                 mainImage.classList.remove('hovered');
@@ -340,7 +367,7 @@
                 
                 // Remove all background classes to return to default
                 document.body.className = '';
-            });
+            }, 100); // Small delay to prevent flickering
         });
         
         // Add click handlers for future functionality
