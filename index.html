@@ -66,6 +66,19 @@
             transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             transform: scale(1);
             filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 300px;
+            height: 300px;
+        }
+        
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            transition: inherit;
         }
         
         .main-image.hovered {
@@ -296,6 +309,30 @@
             'Physical Art': '🖼️'
         };
         
+        // Image paths for each category (for future use)
+        const categoryImagePaths = {
+            'About Me': 'images/about-me.jpg',
+            'Digital Media': 'images/digital-media.jpg',
+            '3D Works': 'images/3d-works.jpg',
+            'Physical Art': 'images/physical-art.jpg'
+        };
+        
+        // Function to set image content (emoji or image)
+        function setImageContent(content, isImage = false) {
+            const mainImage = document.getElementById('mainImage');
+            if (isImage) {
+                mainImage.innerHTML = `<img src="${content}" alt="Category image">`;
+            } else {
+                mainImage.innerHTML = content;
+            }
+        }
+        
+        // TO SWITCH TO IMAGES: 
+        // 1. Create an 'images' folder in your repository
+        // 2. Add your images: about-me.jpg, digital-media.jpg, 3d-works.jpg, physical-art.jpg
+        // 3. Change the setImageContent calls from setImageContent(emoji, false) to setImageContent(categoryImagePaths[category], true)
+        // 4. Change the default from setImageContent(defaultEmoji, false) to setImageContent('images/default.jpg', true)
+        
         // Background classes for each category
         const categoryBackgrounds = {
             'About Me': 'about-me',
@@ -334,7 +371,7 @@
                     // Change emoji after a brief delay
                     setTimeout(() => {
                         if (emoji) {
-                            mainImage.textContent = emoji;
+                            setImageContent(emoji, false);
                             mainImage.classList.remove('transitioning');
                             mainImage.classList.add('hovered');
                         }
@@ -361,7 +398,7 @@
                 
                 // Change back to default after brief delay
                 setTimeout(() => {
-                    mainImage.textContent = defaultEmoji;
+                    setImageContent(defaultEmoji, false);
                     mainImage.classList.remove('transitioning');
                 }, 200);
                 
