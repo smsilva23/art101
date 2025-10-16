@@ -17,6 +17,24 @@
             color: white;
             min-height: 100vh;
             overflow-x: hidden;
+            transition: background 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Background variations for each category */
+        body.about-me {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        }
+        
+        body.digital-media {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #43e97b 100%);
+        }
+        
+        body.3d-works {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 50%, #fa709a 100%);
+        }
+        
+        body.physical-art {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 50%, #d299c2 100%);
         }
         
         .container {
@@ -268,6 +286,14 @@
             'Physical Art': '🖼️'
         };
         
+        // Background classes for each category
+        const categoryBackgrounds = {
+            'About Me': 'about-me',
+            'Digital Media': 'digital-media',
+            '3D Works': '3d-works',
+            'Physical Art': 'physical-art'
+        };
+        
         // Set up hover effects
         navItems.forEach(item => {
             const link = item.querySelector('.nav-link');
@@ -275,15 +301,26 @@
             
             item.addEventListener('mouseenter', () => {
                 const emoji = categoryImages[category];
+                const backgroundClass = categoryBackgrounds[category];
+                
                 if (emoji) {
                     mainImage.textContent = emoji;
                     mainImage.classList.add('hovered');
+                }
+                
+                if (backgroundClass) {
+                    // Remove all background classes first
+                    document.body.className = '';
+                    // Add the specific background class
+                    document.body.classList.add(backgroundClass);
                 }
             });
             
             item.addEventListener('mouseleave', () => {
                 mainImage.textContent = defaultEmoji;
                 mainImage.classList.remove('hovered');
+                // Remove all background classes to return to default
+                document.body.className = '';
             });
         });
         
