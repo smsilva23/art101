@@ -236,14 +236,17 @@
             font-size: 30px;
             font-weight: bold;
             cursor: pointer;
-            padding: 10px 15px;
-            background: rgba(0, 0, 0, 0.5);
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.7);
             border-radius: 50%;
             transition: background 0.3s ease;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
         
         .nav-arrow:hover {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.9);
         }
         
         .nav-arrow.prev {
@@ -252,6 +255,23 @@
         
         .nav-arrow.next {
             right: 20px;
+        }
+        
+        /* Mobile touch improvements */
+        @media (max-width: 768px) {
+            .nav-arrow {
+                padding: 20px 25px;
+                font-size: 35px;
+                background: rgba(0, 0, 0, 0.8);
+            }
+            
+            .nav-arrow.prev {
+                left: 10px;
+            }
+            
+            .nav-arrow.next {
+                right: 10px;
+            }
         }
         
         .model-title {
@@ -375,9 +395,13 @@
             <!-- Modal for enlarged images -->
             <div id="imageModal" class="modal" onclick="closeModal()">
                 <span class="close" onclick="closeModal()">&times;</span>
-                <span class="nav-arrow prev" onclick="event.stopPropagation(); previousImage()">‹</span>
-                <span class="nav-arrow next" onclick="event.stopPropagation(); nextImage()">›</span>
+                <span class="nav-arrow prev" onclick="event.stopPropagation(); previousImage()" ontouchstart="this.style.background='rgba(0,0,0,0.9)'" ontouchend="this.style.background='rgba(0,0,0,0.7)'">‹</span>
+                <span class="nav-arrow next" onclick="event.stopPropagation(); nextImage()" ontouchstart="this.style.background='rgba(0,0,0,0.9)'" ontouchend="this.style.background='rgba(0,0,0,0.7)'">›</span>
                 <img class="modal-content" id="modalImage">
+                <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.7); font-size: 14px; text-align: center;">
+                    <div>Swipe left/right or use arrows to navigate</div>
+                    <div style="margin-top: 5px;">Tap outside to close</div>
+                </div>
             </div>
         </div>
     </div>
@@ -564,6 +588,10 @@
         // Modal functions for image enlargement
         let currentImageIndex = 0;
         let galleryImages = [];
+        let startX = 0;
+        let startY = 0;
+        let endX = 0;
+        let endY = 0;
         
         function openModal(img) {
             const modal = document.getElementById('imageModal');
@@ -575,11 +603,48 @@
             
             modal.style.display = 'block';
             modalImg.src = img.src;
+            
+            // Add touch event listeners for swipe
+            modal.addEventListener('touchstart', handleTouchStart, false);
+            modal.addEventListener('touchend', handleTouchEnd, false);
         }
         
         function closeModal() {
             const modal = document.getElementById('imageModal');
             modal.style.display = 'none';
+            
+            // Remove touch event listeners
+            modal.removeEventListener('touchstart', handleTouchStart, false);
+            modal.removeEventListener('touchend', handleTouchEnd, false);
+        }
+        
+        // Touch handling for swipe gestures
+        function handleTouchStart(e) {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        }
+        
+        function handleTouchEnd(e) {
+            endX = e.changedTouches[0].clientX;
+            endY = e.changedTouches[0].clientY;
+            handleSwipe();
+        }
+        
+        function handleSwipe() {
+            const deltaX = endX - startX;
+            const deltaY = endY - startY;
+            const minSwipeDistance = 50;
+            
+            // Check if it's a horizontal swipe (not vertical)
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+                if (deltaX > 0) {
+                    // Swipe right - previous image
+                    previousImage();
+                } else {
+                    // Swipe left - next image
+                    nextImage();
+                }
+            }
         }
         
         function nextImage() {
