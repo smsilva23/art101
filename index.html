@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sydney Silva - Artist Portfolio</title>
+    
+    <!-- Google Fonts - Professional but Fun Options -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,7 +17,12 @@
         }
         
         body {
-            font-family: 'Georgia', serif;
+            /* Font Options - Uncomment one to use it */
+            font-family: 'Inter', sans-serif;           /* Clean, modern, professional */
+            /* font-family: 'Space Grotesk', sans-serif; */  /* Geometric, tech-forward */
+            /* font-family: 'Outfit', sans-serif; */         /* Rounded, friendly but professional */
+            /* font-family: 'Poppins', sans-serif; */        /* Playful but clean */
+            /* font-family: 'DM Sans', sans-serif; */        /* Humanist, approachable */
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             color: white;
             min-height: 100vh;
@@ -363,6 +373,22 @@
         // 3. Change setBackground(category, false) to setBackground(category, true)
         // 4. Change resetBackground(false) to resetBackground(true)
         // 5. Change the default body background to use 'default-image' class instead of gradient
+        
+        // TO USE CUSTOM FONTS:
+        // 1. Create a 'fonts' folder in your repository
+        // 2. Upload your font files (.woff2, .woff, .ttf, .otf)
+        // 3. Add @font-face rules in the CSS (see example below)
+        // 4. Change the font-family in the body selector
+        
+        /* CUSTOM FONT EXAMPLE:
+        @font-face {
+            font-family: 'YourFontName';
+            src: url('fonts/yourfont.woff2') format('woff2'),
+                 url('fonts/yourfont.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        */
         
         // Background classes for each category (gradients)
         const categoryBackgrounds = {
