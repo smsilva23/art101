@@ -346,7 +346,7 @@
         // Image paths for each category (for future use)
         const categoryImagePaths = {
             'About Me': 'images/about-me.jpg',
-            'Digital Media': 'images/digital-media.jpg',
+            'Digital Media': 'images/medigital.png',
             '3D Works': 'images/3d-works.jpg',
             'Physical Art': 'images/physical-art.jpg'
         };
@@ -457,10 +457,11 @@
                     // Add transitioning class for smooth emoji change
                     mainImage.classList.add('transitioning');
                     
-                    // Change emoji after a brief delay
+                    // Change image after a brief delay
                     setTimeout(() => {
-                        if (emoji) {
-                            setImageContent(emoji, false);
+                        const imagePath = categoryImagePaths[category];
+                        if (imagePath) {
+                            setImageContent(imagePath, true);
                             mainImage.classList.remove('transitioning');
                             mainImage.classList.add('hovered');
                         }
@@ -484,7 +485,7 @@
                 
                 // Change back to default after brief delay
                 setTimeout(() => {
-                    setImageContent(defaultEmoji, false);
+                    setImageContent('images/default.jpg', true);
                     mainImage.classList.remove('transitioning');
                 }, 200);
                 
