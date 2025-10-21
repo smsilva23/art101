@@ -67,11 +67,9 @@
         }
         
         .viewer-container {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
             border-radius: 20px;
             padding: 30px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
             margin-bottom: 40px;
         }
         
@@ -115,12 +113,144 @@
         }
         
         .model-info {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
             border-radius: 15px;
             padding: 20px;
             margin-top: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .gallery-section {
+            margin-top: 40px;
+        }
+        
+        .gallery-title {
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .gallery-image {
+                height: 200px;
+            }
+        }
+        
+        .gallery-item {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .gallery-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .gallery-item-title {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .gallery-item-description {
+            font-size: 0.9em;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+        
+        /* Modal for enlarged images */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            cursor: pointer;
+        }
+        
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90%;
+            object-fit: contain;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 10px;
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            left: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #bbb;
+        }
+        
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #f1f1f1;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+        
+        .nav-arrow:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+        
+        .nav-arrow.prev {
+            left: 20px;
+        }
+        
+        .nav-arrow.next {
+            right: 20px;
         }
         
         .model-title {
@@ -189,7 +319,6 @@
                 <button class="control-btn active" onclick="setAutoRotate(true)">Auto Rotate</button>
                 <button class="control-btn" onclick="setAutoRotate(false)">Manual Control</button>
                 <button class="control-btn" onclick="resetCamera()">Reset View</button>
-                <button class="control-btn" onclick="toggleWireframe()">Toggle Wireframe</button>
             </div>
         </div>
         
@@ -200,6 +329,55 @@
                 scroll to zoom, and right-click to pan. Use the controls above to toggle 
                 auto-rotation and other viewing options.
             </p>
+        </div>
+        
+        <div class="gallery-section">
+            <h2 class="gallery-title">Moss Series</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="images/moss1.jpg" alt="Moss 1" class="gallery-image" onclick="openModal(this)">
+                    <h4 class="gallery-item-title">Moss Study 1</h4>
+                    <p class="gallery-item-description">[Add your description here]</p>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="images/moss2.jpg" alt="Moss 2" class="gallery-image" onclick="openModal(this)">
+                    <h4 class="gallery-item-title">Moss Study 2</h4>
+                    <p class="gallery-item-description">[Add your description here]</p>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="images/moss3.jpg" alt="Moss 3" class="gallery-image" onclick="openModal(this)">
+                    <h4 class="gallery-item-title">Moss Study 3</h4>
+                    <p class="gallery-item-description">[Add your description here]</p>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="images/moss4.jpg" alt="Moss 4" class="gallery-image" onclick="openModal(this)">
+                    <h4 class="gallery-item-title">Moss Study 4</h4>
+                    <p class="gallery-item-description">[Add your description here]</p>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="images/moss5.jpg" alt="Moss 5" class="gallery-image" onclick="openModal(this)">
+                    <h4 class="gallery-item-title">Moss Study 5</h4>
+                    <p class="gallery-item-description">[Add your description here]</p>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="images/moss6.jpg" alt="Moss 6" class="gallery-image" onclick="openModal(this)">
+                    <h4 class="gallery-item-title">Moss Study 6</h4>
+                    <p class="gallery-item-description">[Add your description here]</p>
+                </div>
+            </div>
+            
+            <!-- Modal for enlarged images -->
+            <div id="imageModal" class="modal" onclick="closeModal()">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <span class="nav-arrow prev" onclick="event.stopPropagation(); previousImage()">‹</span>
+                <span class="nav-arrow next" onclick="event.stopPropagation(); nextImage()">›</span>
+                <img class="modal-content" id="modalImage">
+            </div>
         </div>
     </div>
     
@@ -380,7 +558,63 @@
         window.addEventListener('load', init);
         
         // Example: Load a model (uncomment and update path when you have a model)
-        // loadModel('models/your-model.glb');
+        loadModel('models/grape.glb');  // Replace with your actual filename
+        
+        // Modal functions for image enlargement
+        let currentImageIndex = 0;
+        let galleryImages = [];
+        
+        function openModal(img) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            
+            // Get all gallery images
+            galleryImages = Array.from(document.querySelectorAll('.gallery-image'));
+            currentImageIndex = galleryImages.indexOf(img);
+            
+            modal.style.display = 'block';
+            modalImg.src = img.src;
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+        }
+        
+        function nextImage() {
+            if (galleryImages.length === 0) return;
+            currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+            const modalImg = document.getElementById('modalImage');
+            modalImg.src = galleryImages[currentImageIndex].src;
+        }
+        
+        function previousImage() {
+            if (galleryImages.length === 0) return;
+            currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+            const modalImg = document.getElementById('modalImage');
+            modalImg.src = galleryImages[currentImageIndex].src;
+        }
+        
+        // Close modal when clicking outside the image
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            const modal = document.getElementById('imageModal');
+            if (modal.style.display === 'block') {
+                if (e.key === 'Escape') {
+                    closeModal();
+                } else if (e.key === 'ArrowLeft') {
+                    previousImage();
+                } else if (e.key === 'ArrowRight') {
+                    nextImage();
+                }
+            }
+        });
     </script>
 </body>
 </html>
