@@ -497,9 +497,13 @@
         navItems.forEach(item => {
             const link = item.querySelector('.nav-link');
             link.addEventListener('click', (e) => {
-                e.preventDefault();
-                // Future: Add navigation to specific sections
-                console.log(`Clicked: ${link.textContent.trim()}`);
+                // Only prevent default for placeholder links (no href or href="#")
+                if (!link.getAttribute('href') || link.getAttribute('href') === '#') {
+                    e.preventDefault();
+                    // Future: Add navigation to specific sections
+                    console.log(`Clicked: ${link.textContent.trim()}`);
+                }
+                // For real links, allow normal navigation
             });
         });
     </script>
