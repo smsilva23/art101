@@ -31,6 +31,8 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            transform: scale(0.8);
+            transform-origin: top left;
         }
         
         /* Background variations for each category - gradients */
@@ -52,15 +54,24 @@
         
         /* Background image variations for each category */
         body.about-me-image {
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/backgrounds/about-me-bg.jpg');
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/backgrounds/aboutme.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
         
         body.digital-media-image {
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/backgrounds/digital-media-bg.jpg');
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/backgrounds/digital.jpg?v=3');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
         
         body.3d-works-image {
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/backgrounds/3d-works-bg.jpg');
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/backgrounds/3D.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
         
         body.physical-art-image {
@@ -72,9 +83,8 @@
         }
         
         .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 20px;
+            margin: 0;
+            padding: 20px 120px;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 60px;
@@ -91,20 +101,23 @@
             height: 500px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-end;
+            padding-right: 10px;
         }
         
         .main-image {
-            font-size: 250px;
+            font-size: 300px !important;
             opacity: 0.8;
             transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             transform: scale(1);
             filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
             display: flex;
             align-items: center;
-            justify-content: center;
-            width: 400px;
-            height: 400px;
+            justify-content: flex-end;
+            width: 700px !important;
+            height: 700px !important;
+            position: absolute;
+            right: 0px;
         }
         
         .main-image img {
@@ -128,7 +141,7 @@
         }
         
         h1 {
-            font-size: 4em;
+            font-size: 5em;
             margin-bottom: 20px;
             background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
             background-size: 400% 400%;
@@ -145,7 +158,7 @@
         }
         
         .subtitle {
-            font-size: 1.3em;
+            font-size: 1.5em;
             margin-bottom: 50px;
             opacity: 0.9;
             line-height: 1.6;
@@ -159,6 +172,8 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             text-align: left;
+            width: fit-content;
+            max-width: 100%;
         }
         
         .nav-item {
@@ -168,7 +183,7 @@
         
         .nav-link {
             display: block;
-            font-size: 2.2em;
+            font-size: 2.8em;
             color: white;
             text-decoration: none;
             padding: 15px 0;
@@ -199,7 +214,7 @@
         }
         
         .nav-description {
-            font-size: 0.9em;
+            font-size: 1.1em;
             opacity: 0.7;
             margin-top: 8px;
             transform: translateY(10px);
@@ -265,7 +280,7 @@
             bottom: 20px;
             right: 20px;
             opacity: 0.6;
-            font-size: 0.9em;
+            font-size: 1.1em;
         }
         
         /* Responsive Design */
@@ -273,29 +288,28 @@
             .container {
                 grid-template-columns: 1fr;
                 gap: 30px;
-                text-align: center;
-                padding: 20px 15px;
+                text-align: left;
+                padding: 20px 5px;
             }
             
             h1 {
-                font-size: 2.5em;
+                font-size: 3.5em;
                 margin-bottom: 10px;
             }
             
             .subtitle {
-                font-size: 1em;
+                font-size: 1.2em;
                 margin-bottom: 30px;
             }
             
             .nav-link {
-                font-size: 1.6em;
+                font-size: 2.2em;
             }
             
             .main-image {
-                font-size: 120px;
-                width: 250px;
-                height: 250px;
-                margin: 0 auto;
+                font-size: 200px !important;
+                width: 350px !important;
+                height: 350px !important;
             }
             
             .nav-menu {
@@ -367,7 +381,7 @@
         
         // Image paths for each category (for future use)
         const categoryImagePaths = {
-            'About Me': 'images/about-me.jpg',
+            'About Me': 'images/aboutme.JPG',
             'Digital Media': 'images/medigital.png',
             '3D Works': 'images/3d-works.jpg',
             'Physical Art': 'images/physical-art.jpg'
@@ -490,7 +504,7 @@
                     }, 200);
                     
                     // Change background smoothly
-                    setBackground(category, false); // Change to true for image backgrounds
+                    setBackground(category, true); // Change to true for image backgrounds
                 }
             });
         });
@@ -512,7 +526,7 @@
                 }, 200);
                 
                 // Remove all background classes to return to default
-                resetBackground(false); // Change to true for image backgrounds
+                resetBackground(true); // Change to true for image backgrounds
             }, 100); // Small delay to prevent flickering
         });
         
