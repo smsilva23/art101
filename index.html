@@ -52,6 +52,10 @@
             background: linear-gradient(135deg, #a8edea 0%, #fed6e3 50%, #d299c2 100%);
         }
         
+        body.contact-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+        }
+        
         /* Background image variations for each category */
         body.about-me-image {
             background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/backgrounds/aboutme.jpeg');
@@ -98,7 +102,14 @@
         
         body.physical-art-image {
             background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/backgrounds/physical.jpeg');
-            background-size: 120% auto;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        body.contact-info-image {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/backgrounds/aboutme.jpeg');
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
         }
@@ -382,7 +393,7 @@
                     </li>
                     <li class="nav-item" data-image="💻">
                         <a href="digital-media.html" class="nav-link">Digital Media</a>
-                        <p class="nav-description">Interactive Web Art, Graphics, and Videos</p>
+                        <p class="nav-description">Interactive Web Art, and Graphics</p>
                     </li>
                     <li class="nav-item" data-image="🎨">
                         <a href="3d-works.html" class="nav-link">3D Works</a>
@@ -392,12 +403,18 @@
                         <a href="physical-art.html" class="nav-link">Physical Art</a>
                         <p class="nav-description">Installations, Stained Glass and Traditional Art </p>
                     </li>
+                    <li class="nav-item" data-image="📧">
+                        <a href="contact-info.html" class="nav-link">Contact Info</a>
+                        <p class="nav-description">Get in touch and connect with me</p>
+                    </li>
                 </ul>
             </nav>
         </div>
         
         <div class="image-section">
-            <div class="main-image" id="mainImage">✨</div>
+            <div class="main-image" id="mainImage">
+                <img src="images/aboutme.JPG" alt="Sydney Silva" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;">
+            </div>
         </div>
     </div>
     
@@ -415,7 +432,8 @@
             'About Me': 'images/aboutme.JPG',
             'Digital Media': 'images/medigital.png',
             '3D Works': 'images/moss6.jpg',
-            'Physical Art': 'images/mephysical.JPG'
+            'Physical Art': 'images/mephysical.JPG',
+            'Contact Info': 'images/contact.jpg'
         };
         
         // Function to set image content (emoji or image)
@@ -462,7 +480,8 @@
             'About Me': 'about-me',
             'Digital Media': 'digital-media',
             '3D Works': '3d-works',
-            'Physical Art': 'physical-art'
+            'Physical Art': 'physical-art',
+            'Contact Info': 'contact-info'
         };
         
         // Background image classes for each category
@@ -470,7 +489,8 @@
             'About Me': 'about-me-image',
             'Digital Media': 'digital-media-image',
             '3D Works': '3d-works-image',
-            'Physical Art': 'physical-art-image'
+            'Physical Art': 'physical-art-image',
+            'Contact Info': 'contact-info-image'
         };
         
         // Function to set background (gradient or image)
@@ -557,7 +577,8 @@
                     'About Me': 'about-me.html',
                     'Digital Media': 'digital-media.html',
                     '3D Works': '3d-works.html',
-                    'Physical Art': 'physical-art.html'
+                    'Physical Art': 'physical-art.html',
+                    'Contact Info': 'contact-info.html'
                 };
                 
                 const targetPage = categoryPages[currentHoveredCategory];

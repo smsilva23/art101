@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Info - Sydney Silva</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/backgrounds/aboutme.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 8s ease-in-out infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .subtitle {
+            font-size: 1.5em;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+        
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+        
+        .content h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: #4ecdc4;
+            text-align: center;
+        }
+        
+        .content p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .contact-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .contact-item h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #4ecdc4;
+        }
+        
+        .contact-item p {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        
+        .contact-item a {
+            color: #45b7d1;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .contact-item a:hover {
+            color: #4ecdc4;
+        }
+        
+        .back-link {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            background: rgba(0,0,0,0.3);
+            padding: 10px 20px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .back-link:hover {
+            background: rgba(0,0,0,0.5);
+            transform: translateY(-2px);
+        }
+        
+        .footer {
+            position: fixed;
+            bottom: 0px;
+            right: 0px;
+            padding: 20px;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9em;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 2.5em;
+            }
+            
+            .subtitle {
+                font-size: 1.2em;
+            }
+            
+            .content h2 {
+                font-size: 2em;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .contact-item {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Portfolio</a>
+        
+        <div class="header">
+            <h1>Contact Info</h1>
+            <p class="subtitle">Let's Connect and Create Together</p>
+        </div>
+        
+        <div class="content">
+            <h2>Get In Touch</h2>
+            <p>I'm always excited to collaborate, discuss new projects, or share what I'm currently working on! Feel free to reach out through either channel below.</p>
+            
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <h3>Email</h3>
+                    <p>For project inquiries, collaborations, or general questions</p>
+                    <a href="mailto:smsilva2004.com">smsilva2004@gmail.com</a>
+                </div>
+                
+                <div class="contact-item">
+                    <h3>Social Media</h3>
+                    <p>Follow my creative journey and see behind-the-scenes content on Instagram!</p>
+                    <a href="https://www.instagram.com/mainstreetartistry/" target="_blank">@mainstreetartistry</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>Portfolio 2025-26</p>
+    </div>
+</body>
+</html>
