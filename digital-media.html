@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Media - Sydney Silva</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: url('images/backgrounds/digital.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 8s ease-in-out infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .subtitle {
+            font-size: 1.5em;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .back-link {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .content {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .content h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #4ecdc4;
+        }
+        
+        .content p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .featured-project {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .project-viewport {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 0 auto 20px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-viewport:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .project-viewport iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 15px;
+        }
+        
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 15px;
+        }
+        
+        .project-viewport:hover .project-overlay {
+            opacity: 1;
+        }
+        
+        .project-overlay-text {
+            color: white;
+            font-size: 1.2em;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .project-title {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: #4ecdc4;
+        }
+        
+        .project-description {
+            font-size: 1.1em;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .project-link {
+            display: inline-block;
+            padding: 12px 30px;
+            background: rgba(78, 205, 196, 0.2);
+            color: #4ecdc4;
+            text-decoration: none;
+            border: 2px solid #4ecdc4;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .project-link:hover {
+            background: #4ecdc4;
+            color: #1a1a2e;
+            transform: translateY(-2px);
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .gallery-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .gallery-item h3 {
+            color: #4ecdc4;
+            margin-bottom: 10px;
+        }
+        
+        .footer {
+            position: fixed;
+            bottom: 0px;
+            right: 0px;
+            opacity: 0.6;
+            font-size: 1.1em;
+        }
+        
+        /* Image Showcase Styles */
+        .image-showcase {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .showcase-image {
+            max-width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .showcase-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+        
+        /* Clickable Image Styles */
+        .clickable-image {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .clickable-image:hover {
+            opacity: 0.9;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            cursor: pointer;
+        }
+        
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90%;
+            object-fit: contain;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            left: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        .close:hover {
+            color: #bbb;
+        }
+        
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #f1f1f1;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            transition: background 0.3s ease;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .nav-arrow:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+        
+        .nav-arrow.prev {
+            left: 20px;
+        }
+        
+        .nav-arrow.next {
+            right: 20px;
+        }
+        
+        /* Mobile touch improvements */
+        @media (max-width: 768px) {
+            .nav-arrow {
+                padding: 20px 25px;
+                font-size: 35px;
+                background: rgba(0, 0, 0, 0.8);
+            }
+            
+            .nav-arrow.prev {
+                left: 10px;
+            }
+            
+            .nav-arrow.next {
+                right: 10px;
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 2.5em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .content h2 {
+                font-size: 2em;
+            }
+            
+            .showcase-image {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Portfolio</a>
+        
+        <div class="header">
+            <h1>Digital Media</h1>
+            <p class="subtitle">Interactive Web Art, Graphics, and Videos</p>
+        </div>
+        
+        <div class="content">
+            <h2>Interactive Web Art</h2>
+            <p>My digital media work explores the intersection of technology and creativity, creating immersive experiences that engage viewers in new and unexpected ways.</p>
+            
+            <div class="featured-project">
+                <h3 class="project-title">Featured Project</h3>
+                <div class="project-viewport" onclick="window.open('worry_netart/index.html', '_blank')">
+                    <iframe src="worry_netart/index.html" title="Worry Net Art Preview"></iframe>
+                    <div class="project-overlay">
+                        <div class="project-overlay-text">Click to View Full Project</div>
+                    </div>
+                </div>
+                <h4>Worry Net Art</h4>
+                <p class="project-description">An interactive web art piece exploring themes of anxiety and digital connection through immersive visual experiences.</p>
+                <a href="worry_netart/index.html" class="project-link" target="_blank">View Full Project →</a>
+            </div>
+            
+            <h2>Graphics & Design</h2>
+            <p>From conceptual graphics to digital illustrations, I create visual narratives that communicate complex ideas through compelling imagery and thoughtful design.</p>
+            
+            <!-- Monterey Image -->
+            <div class="image-showcase">
+                <img src="images/monterey.jpg" alt="Monterey" class="showcase-image clickable-image" onclick="openImageModal(this)">
+            </div>
+            
+            <h2>Video Art</h2>
+            <p>Moving images become a canvas for storytelling, combining cinematography, animation, and digital effects to create powerful visual experiences.</p>
+            
+            <div class="gallery">
+                <div class="gallery-item">
+                    <h3>Interactive Installations</h3>
+                    <p>Web-based art that responds to user interaction</p>
+                </div>
+                <div class="gallery-item">
+                    <h3>Digital Graphics</h3>
+                    <p>Conceptual designs and visual communications</p>
+                </div>
+                <div class="gallery-item">
+                    <h3>Video Projects</h3>
+                    <p>Experimental and narrative video works</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Image Modal -->
+        <div id="imageModal" class="modal" onclick="closeImageModal()">
+            <span class="close" onclick="closeImageModal()">&times;</span>
+            <span class="nav-arrow prev" onclick="event.stopPropagation(); previousImage()" ontouchstart="this.style.background='rgba(0,0,0,0.9)'" ontouchend="this.style.background='rgba(0,0,0,0.7)'">‹</span>
+            <span class="nav-arrow next" onclick="event.stopPropagation(); nextImage()" ontouchstart="this.style.background='rgba(0,0,0,0.9)'" ontouchend="this.style.background='rgba(0,0,0,0.7)'">›</span>
+            <img class="modal-content" id="modalImage">
+            <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.7); font-size: 14px; text-align: center;">
+                <div>Use arrows or swipe to navigate</div>
+                <div style="margin-top: 5px;">Click outside to close</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>Portfolio 2025-26</p>
+    </div>
+    
+    <script>
+        // Image Modal Functions
+        let currentImageIndex = 0;
+        let galleryImages = [];
+        let startX = 0;
+        let startY = 0;
+        let endX = 0;
+        let endY = 0;
+        
+        function openImageModal(img) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            
+            // Get all clickable images
+            galleryImages = Array.from(document.querySelectorAll('.clickable-image'));
+            currentImageIndex = galleryImages.indexOf(img);
+            
+            modal.style.display = 'block';
+            modalImg.src = img.src;
+            modalImg.alt = img.alt;
+            
+            // Add touch event listeners for swipe
+            modal.addEventListener('touchstart', handleTouchStart, false);
+            modal.addEventListener('touchend', handleTouchEnd, false);
+        }
+        
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+            
+            // Remove touch event listeners
+            modal.removeEventListener('touchstart', handleTouchStart, false);
+            modal.removeEventListener('touchend', handleTouchEnd, false);
+        }
+        
+        // Touch handling for swipe gestures
+        function handleTouchStart(e) {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        }
+        
+        function handleTouchEnd(e) {
+            endX = e.changedTouches[0].clientX;
+            endY = e.changedTouches[0].clientY;
+            handleSwipe();
+        }
+        
+        function handleSwipe() {
+            const deltaX = endX - startX;
+            const deltaY = endY - startY;
+            const minSwipeDistance = 50;
+            
+            // Check if it's a horizontal swipe (not vertical)
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+                if (deltaX > 0) {
+                    // Swipe right - previous image
+                    previousImage();
+                } else {
+                    // Swipe left - next image
+                    nextImage();
+                }
+            }
+        }
+        
+        function nextImage() {
+            if (galleryImages.length === 0) return;
+            currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+            const modalImg = document.getElementById('modalImage');
+            modalImg.src = galleryImages[currentImageIndex].src;
+        }
+        
+        function previousImage() {
+            if (galleryImages.length === 0) return;
+            currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+            const modalImg = document.getElementById('modalImage');
+            modalImg.src = galleryImages[currentImageIndex].src;
+        }
+        
+        // Close modal when clicking outside the image
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeImageModal();
+            }
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            const modal = document.getElementById('imageModal');
+            if (modal.style.display === 'block') {
+                if (e.key === 'Escape') {
+                    closeImageModal();
+                } else if (e.key === 'ArrowLeft') {
+                    previousImage();
+                } else if (e.key === 'ArrowRight') {
+                    nextImage();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

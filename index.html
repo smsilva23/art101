@@ -68,14 +68,39 @@
         }
         
         body.3d-works-image {
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/backgrounds/3D.jpeg');
+            background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('images/backgrounds/33.png?v=5') !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+        }
+        
+        html body.3d-works-image {
+            background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('images/backgrounds/33.png?v=5') !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+        }
+        
+        body[class*="3d-works-image"] {
+            background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('images/backgrounds/33.png?v=5') !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+        }
+        
+        
+        body.digital-media-image {
+            background: url('images/backgrounds/digital.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
         }
         
         body.physical-art-image {
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/backgrounds/physical-art-bg.jpg');
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/backgrounds/physical.jpeg');
+            background-size: 120% auto;
+            background-position: center;
+            background-repeat: no-repeat;
         }
         
         body.default-image {
@@ -109,15 +134,29 @@
             font-size: 300px !important;
             opacity: 0.8;
             transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            transform: scale(1);
+            transform: scale(1) translateY(-50%);
             filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            width: 700px !important;
-            height: 700px !important;
-            position: absolute;
-            right: 0px;
+            width: 750px !important;
+            height: 750px !important;
+            position: fixed;
+            right: -30px;
+            top: 60%;
+            cursor: pointer;
+        }
+        
+        /* Smaller images for all except Digital Media */
+        .main-image:not([src*="medigital.png"]) {
+            width: 550px !important;
+            height: 550px !important;
+        }
+        
+        /* Ensure Digital Media image stays large */
+        .main-image[src*="medigital.png"] {
+            width: 750px !important;
+            height: 750px !important;
         }
         
         .main-image img {
@@ -131,13 +170,13 @@
         }
         
         .main-image.hovered {
-            transform: scale(1.1) rotate(5deg);
+            transform: scale(1.1) rotate(2deg) translateY(-50%);
             opacity: 1;
         }
         
         .main-image.transitioning {
             opacity: 0.3;
-            transform: scale(0.9);
+            transform: scale(0.9) translateY(-50%);
         }
         
         h1 {
@@ -277,8 +316,8 @@
         
         .footer {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 0px;
+            right: 0px;
             opacity: 0.6;
             font-size: 1.1em;
         }
@@ -338,19 +377,19 @@
             <nav>
                 <ul class="nav-menu">
                     <li class="nav-item" data-image="👤">
-                        <a href="#" class="nav-link">About Me</a>
+                        <a href="about-me.html" class="nav-link">About Me</a>
                         <p class="nav-description">Learn more about me, and my experience!</p>
                     </li>
                     <li class="nav-item" data-image="💻">
-                        <a href="#" class="nav-link">Digital Media</a>
-                        <p class="nav-description">Interactive web art, Graphics, and Videos</p>
+                        <a href="digital-media.html" class="nav-link">Digital Media</a>
+                        <p class="nav-description">Interactive Web Art, Graphics, and Videos</p>
                     </li>
                     <li class="nav-item" data-image="🎨">
                         <a href="3d-works.html" class="nav-link">3D Works</a>
                         <p class="nav-description">Sculptures, and Digital 3D works </p>
                     </li>
                     <li class="nav-item" data-image="🖼️">
-                        <a href="#" class="nav-link">Physical Art</a>
+                        <a href="physical-art.html" class="nav-link">Physical Art</a>
                         <p class="nav-description">Installations, Stained Glass and Traditional Art </p>
                     </li>
                 </ul>
@@ -370,21 +409,13 @@
         const navItems = document.querySelectorAll('.nav-item');
         const mainImage = document.getElementById('mainImage');
         
-        // Default emoji and specific emoji for each category
-        const defaultEmoji = '✨';
-        const categoryImages = {
-            'About Me': '👤',
-            'Digital Media': '💻',
-            '3D Works': '🎨',
-            'Physical Art': '🖼️'
-        };
         
         // Image paths for each category (for future use)
         const categoryImagePaths = {
             'About Me': 'images/aboutme.JPG',
             'Digital Media': 'images/medigital.png',
-            '3D Works': 'images/3d-works.jpg',
-            'Physical Art': 'images/physical-art.jpg'
+            '3D Works': 'images/moss6.jpg',
+            'Physical Art': 'images/mephysical.JPG'
         };
         
         // Function to set image content (emoji or image)
@@ -475,15 +506,17 @@
         navItems.forEach(item => {
             const link = item.querySelector('.nav-link');
             const category = link.textContent.trim();
+            console.log('Setting up hover for:', category);
             
             item.addEventListener('mouseenter', () => {
+                console.log('Hovering over:', category);
                 // Clear any pending reset
                 if (resetTimeout) {
                     clearTimeout(resetTimeout);
                     resetTimeout = null;
                 }
                 
-                const emoji = categoryImages[category];
+                const imagePath = categoryImagePaths[category];
                 const backgroundClass = categoryBackgrounds[category];
                 
                 // Only change if this is a different category
@@ -504,30 +537,34 @@
                     }, 200);
                     
                     // Change background smoothly
+                    console.log('Setting background for category:', category);
                     setBackground(category, true); // Change to true for image backgrounds
+                    console.log('Body classes after setBackground:', document.body.className);
                 }
             });
         });
         
         // Set up mouse leave for the entire navigation area
         navMenu.addEventListener('mouseleave', () => {
-            // Add a small delay to prevent flickering when moving between items
-            resetTimeout = setTimeout(() => {
-                currentHoveredCategory = null;
+            // Just remove the hovered class, keep the last image visible
+            mainImage.classList.remove('hovered');
+        });
+        
+        // Make the main image clickable to navigate to the current category's page
+        mainImage.addEventListener('click', () => {
+            if (currentHoveredCategory) {
+                const categoryPages = {
+                    'About Me': 'about-me.html',
+                    'Digital Media': 'digital-media.html',
+                    '3D Works': '3d-works.html',
+                    'Physical Art': 'physical-art.html'
+                };
                 
-                // Add transitioning class for smooth return
-                mainImage.classList.add('transitioning');
-                mainImage.classList.remove('hovered');
-                
-                // Change back to default after brief delay
-                setTimeout(() => {
-                    setImageContent('images/default.jpg', true);
-                    mainImage.classList.remove('transitioning');
-                }, 200);
-                
-                // Remove all background classes to return to default
-                resetBackground(true); // Change to true for image backgrounds
-            }, 100); // Small delay to prevent flickering
+                const targetPage = categoryPages[currentHoveredCategory];
+                if (targetPage) {
+                    window.location.href = targetPage;
+                }
+            }
         });
         
         // Add click handlers for future functionality
